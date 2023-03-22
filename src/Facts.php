@@ -41,6 +41,8 @@ class Facts
      */
     const COMPOSER_PACKAGE_OXIDESHOP_CE = 'shop-ce';
 
+    protected $startPath;
+
     /**
      * @var null | ConfigFile
      */
