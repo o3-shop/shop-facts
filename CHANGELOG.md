@@ -5,6 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/ ).
 and this project adheres to [Semantic Versioning](http://semver.org/ ).
 
+## [v1.0.1] - 2023-03-22
+
+### Fixed
+- prevent deprecation notice because of dynamic property
+
 ## [v1.0.0] - 2023-03-05
 
 # [O3-Shop]
@@ -52,7 +57,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/ ).
 
 - `Facts::getDatabasePort()`
 
-[v1.0.0]: https://github.com/o3-shop/shop-facts/releases/tag/v1.0.0
+[v1.0.1]: https://gitlab.o3-shop.com/o3/shop-facts/-/compare/v1.0.0...v1.0.1
+[v1.0.0]: https://gitlab.o3-shop.com/o3/shop-facts/-/tags/v1.0.0
 [O3-Shop]: https://www.o3-shop.com/
 [2.4.0]: https://github.com/OXID-eSales/oxideshop-facts/compare/v2.3.2...v2.4.0
 [2.3.2]: https://github.com/OXID-eSales/oxideshop-facts/compare/v2.3.1...v2.3.2
