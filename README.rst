@@ -8,4 +8,4 @@ for example before setup of a shop.
 Bugs and Issues
 ---------------
 
-If you experience any bugs or issues, please report them in the section **O3-Shop (all versions)** of https://bugs.o3-shop.com.
+If you experience any bugs or issues, please report them in the section **O3-Shop (all versions)** of https://issues.o3-shop.com.
