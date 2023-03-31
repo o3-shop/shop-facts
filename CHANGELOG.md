@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/ ).
 and this project adheres to [Semantic Versioning](http://semver.org/ ).
 
+## [unreleased]
+
+## [v1.0.2] - 2023-03-31
+
+### Fixed
+- fix PHP 8.2 deprecation notice issues
+
 ## [v1.0.1] - 2023-03-22
 
 ### Fixed
@@ -57,6 +64,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/ ).
 
 - `Facts::getDatabasePort()`
 
+[unreleased]: https://gitlab.o3-shop.com/o3/shop-facts/-/compare/v1.0.2...b-1.x
+[v1.0.2]: https://gitlab.o3-shop.com/o3/shop-facts/-/compare/v1.0.1...v1.0.2
 [v1.0.1]: https://gitlab.o3-shop.com/o3/shop-facts/-/compare/v1.0.0...v1.0.1
 [v1.0.0]: https://gitlab.o3-shop.com/o3/shop-facts/-/tags/v1.0.0
 [O3-Shop]: https://www.o3-shop.com/

@@ -23,7 +23,6 @@ namespace OxidEsales\Facts\Config;
 /**
  * Wraps and provides getters for configuration constants stored in configuration file (usually config.inc.php).
  */
-#[AllowDynamicProperties]
 class ConfigFile
 {
     const PARAMETER_VENDOR_PATH = 'vendor_path';
@@ -33,6 +32,58 @@ class ConfigFile
     const ERROR_CODE_CONFIGFILE_PATH_EMPTY = 1;
     const ERROR_CODE_CONFIGFILE_NOT_FOUND = 2;
 
+    public $vendor_path = null;
+    public $source_path = null;
+
+    protected array $dynamicProperties = [];
+
+    /**
+     * @param string $name
+     * @param mixed $value
+     * @return void
+     */
+    public function __set(string $name, $value): void
+    {
+        $this->dynamicProperties[$name] = $value;
+    }
+
+    /**
+     * @param string $name
+     * @return bool
+     */
+    public function __isset(string $name): bool
+    {
+        return isset($this->dynamicProperties[$name]);
+    }
+
+    /**
+     * @param string $name
+     * @return mixed
+     */
+    public function __get(string $name)
+    {
+        if (array_key_exists($name, $this->dynamicProperties)) {
+            return $this->dynamicProperties[$name];
+        }
+
+        $trace = debug_backtrace();
+        trigger_error(
+            'Undefined property via __get(): ' . $name .
+            ' in ' . $trace[0]['file'] .
+            ' on line ' . $trace[0]['line']);
+
+        return null;
+    }
+
+    /**
+     * @param string $name
+     * @return void
+     */
+    public function __unset(string $name): void
+    {
+        unset($this->dynamicProperties[$name]);
+    }
+
     /**
      * Initializes the instance. Loads config variables from the file.
      *
@@ -40,7 +91,7 @@ class ConfigFile
      *
      * @throws \Exception if config.inc.php does not exist.
      */
-    public function __construct($pathToConfigIncFile = null)
+    public function __construct($pathToConfigIncFile = '')
     {
         if (is_file($pathToConfigIncFile)) {
             $this->loadVars($pathToConfigIncFile);
