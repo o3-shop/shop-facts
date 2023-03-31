@@ -23,7 +23,6 @@ namespace OxidEsales\Facts\Config;
 /**
  * Wraps and provides getters for configuration constants stored in configuration file (usually config.inc.php).
  */
-#[AllowDynamicProperties]
 class ConfigFile
 {
     const PARAMETER_VENDOR_PATH = 'vendor_path';
@@ -33,6 +32,53 @@ class ConfigFile
     const ERROR_CODE_CONFIGFILE_PATH_EMPTY = 1;
     const ERROR_CODE_CONFIGFILE_NOT_FOUND = 2;
 
+    public $vendor_path = null;
+    public $source_path = null;
+
+    public $dbType = null;
+    public $dbCharset = null;
+    public $dbHost = null;
+    public $dbPort = null;
+    public $dbName = null;
+    public $dbUser = null;
+    public $dbPwd = null;
+    public $dbDriverOptions = null;
+    public $dbUnixSocket = null;
+    public $sShopURL = null;
+    public $sSSLShopURL = null;
+    public $sAdminSSLURL = null;
+    public $sShopDir = null;
+    public $sCompileDir = null;
+    public $edition = null;
+    public $aAllowedUploadTypes = null;
+    public $sO3SHOPPHP = null;
+    public $sLogLevel = null;
+    public $blLogChangesInAdmin = null;
+    public $blSeoLogging = null;
+    public $iDebug = null;
+    public $blDebugTemplateBlocks = null;
+    public $sAdminEmail = null;
+    public $offlineWarningInterval = null;
+    public $blForceSessionStart = null;
+    public $blSessionUseCookies = null;
+    public $aCookieDomains = null;
+    public $aCookiePaths = null;
+    public $aRobots = null;
+    public $aRobotsExcept = null;
+    public $aTrustedIPs = null;
+    public $iBasketReservationCleanPerRequest = null;
+    public $aUserComponentNames = null;
+    public $aMultiLangTables = null;
+    public $blUseCron = null;
+    public $blDoNotDisableModuleOnError = null;
+    public $blSkipViewUsage = null;
+    public $iDebugSlowQueryTime = null;
+    public $blUseRightsRoles = null;
+    public $blShowUpdateViews = null;
+    public $aSlaveHosts = null;
+    public $blDelSetupDir = null;
+    public $iUtfMode = null;
+
     /**
      * Initializes the instance. Loads config variables from the file.
      *
@@ -40,7 +86,7 @@ class ConfigFile
      *
      * @throws \Exception if config.inc.php does not exist.
      */
-    public function __construct($pathToConfigIncFile = null)
+    public function __construct($pathToConfigIncFile = '')
     {
         if (is_file($pathToConfigIncFile)) {
             $this->loadVars($pathToConfigIncFile);
