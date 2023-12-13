@@ -28,6 +28,8 @@ use OxidEsales\Facts\Facts;
  */
 class EditionSelector
 {
+    const ENTERPRISE = 'EE';
+    const PROFESSIONAL = 'PE';
     const COMMUNITY = 'CE';
 
     /** @var string Edition abbreviation */
