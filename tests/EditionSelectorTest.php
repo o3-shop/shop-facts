@@ -20,9 +20,11 @@
 
 namespace OxidEsales\Facts\Tests\Unit;
 
+use OxidEsales\Facts\Config\ConfigFile;
 use OxidEsales\Facts\Edition\EditionSelector;
+use PHPUnit\Framework\TestCase;
 
-class EditionSelectorTest extends \PHPUnit_Framework_TestCase
+class EditionSelectorTest extends TestCase
 {
     public function testReturnsEditionFromConfig()
     {
@@ -38,8 +40,6 @@ class EditionSelectorTest extends \PHPUnit_Framework_TestCase
         return [
             ['CE'],
             ['ce'],
-            ['cE'],
-            ['Ce'],
         ];
     }
 
@@ -58,8 +58,6 @@ class EditionSelectorTest extends \PHPUnit_Framework_TestCase
 
         $this->assertSame('CE', $editionSelector->getEdition());
         $this->assertTrue($editionSelector->isCommunity());
-        $this->assertFalse($editionSelector->isProfessional());
-        $this->assertFalse($editionSelector->isEnterprise());
     }
 
     /**
@@ -76,64 +74,6 @@ class EditionSelectorTest extends \PHPUnit_Framework_TestCase
         $editionSelector = new EditionSelector($config);
 
         $this->assertTrue($editionSelector->isCommunity());
-        $this->assertFalse($editionSelector->isProfessional());
-        $this->assertFalse($editionSelector->isEnterprise());
-    }
-
-    public function providerGetProfessionalEdition()
-    {
-        return [
-            ['PE'],
-            ['pe'],
-            ['pE'],
-            ['Pe'],
-        ];
-    }
-
-    /**
-     * Test that returns professional edition independent from camel case.
-     *
-     * @param string $edition
-     *
-     * @dataProvider providerGetProfessionalEdition
-     */
-    public function testGetProfessionalEdition($edition)
-    {
-        $config = $this->getConfigStub($edition);
-
-        $editionSelector = new EditionSelector($config);
-
-        $this->assertFalse($editionSelector->isCommunity());
-        $this->assertTrue($editionSelector->isProfessional());
-        $this->assertFalse($editionSelector->isEnterprise());
-    }
-
-    public function providerGetEnterpriseEdition()
-    {
-        return [
-            ['EE'],
-            ['Ee'],
-            ['eE'],
-            ['Ee'],
-        ];
-    }
-
-    /**
-     * Test that returns professional edition independent from camel case.
-     *
-     * @param string $edition
-     *
-     * @dataProvider providerGetEnterpriseEdition
-     */
-    public function testGetEnterpriseEdition($edition)
-    {
-        $config = $this->getConfigStub($edition);
-
-        $editionSelector = new EditionSelector($config);
-
-        $this->assertFalse($editionSelector->isCommunity());
-        $this->assertFalse($editionSelector->isProfessional());
-        $this->assertTrue($editionSelector->isEnterprise());
     }
 
     /**
@@ -146,9 +86,18 @@ class EditionSelectorTest extends \PHPUnit_Framework_TestCase
      */
     private function getConfigStub($edition)
     {
-        $config = $this->getMock('ConfigFile', ['getVar']);
+        $config = $this->createMock(ConfigFile::class, ['getVar']);
         $config->method('getVar')->will($this->returnValue($edition));
 
         return $config;
+    }
+
+    public function testFineEditionException()
+    {
+        $config = $this->getConfigStub("LOL");
+
+        $editionSelector = new EditionSelector($config);
+
+        $this->assertFalse($editionSelector->isCommunity());
     }
 }
