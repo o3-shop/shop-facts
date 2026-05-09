@@ -93,7 +93,7 @@ class ConfigFile
      */
     public function __construct($pathToConfigIncFile = '')
     {
-        if (is_file($pathToConfigIncFile)) {
+        if (is_string($pathToConfigIncFile) && is_file($pathToConfigIncFile)) {
             $this->loadVars($pathToConfigIncFile);
             return;
         }

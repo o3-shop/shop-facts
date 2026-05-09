@@ -21,17 +21,18 @@
 namespace OxidEsales\Facts\Tests\Unit;
 
 use org\bovigo\vfs\vfsStream;
+use PHPUnit\Framework\TestCase;
 use Webmozart\PathUtil\Path;
 use Symfony\Component\Filesystem\Filesystem;
 use OxidEsales\Facts\Config\ConfigFile;
 
-class ConfigFileTest extends \PHPUnit_Framework_TestCase
+class ConfigFileTest extends TestCase
 {
     private $temporaryPath;
     private $vendorPath;
     private $targetPath;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->temporaryPath = Path::join(__DIR__, 'tmp');
         $this->vendorPath = Path::join(__DIR__, 'tmp', 'testData');
@@ -39,7 +40,7 @@ class ConfigFileTest extends \PHPUnit_Framework_TestCase
         $this->buildDirectory();
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         $filesystem = new Filesystem();
         $filesystem->remove($this->temporaryPath);
@@ -50,6 +51,32 @@ class ConfigFileTest extends \PHPUnit_Framework_TestCase
         $configFile = new ConfigFile(Path::join($this->vendorPath, 'config.inc.php'));
 
         $this->assertSame('test', $configFile->getVar('dbName'));
+    }
+
+    public function testWithoutConfigFile()
+    {
+        $this->expectException(\Exception::class);
+        $configFile = new ConfigFile();
+
+    }
+
+    public function testGetVar()
+    {
+        $configFile = new ConfigFile(Path::join($this->vendorPath, 'config.inc.php'));
+
+        $configFile->setVar('BlaBlaBla', 'newValue');
+
+        $this->assertTrue($configFile->isVarSet('BlaBlaBla'));
+        $this->assertSame('newValue', $configFile->getVar('BlaBlaBla'));
+        $array = [
+            "vendor_path" => null,
+            "source_path" => null,
+            "dynamicProperties" => [
+                "dbName" => "test",
+                "BlaBlaBla" => "newValue"
+            ]
+        ];
+        $this->assertSame($array, $configFile->getVars());
     }
 
     private function buildDirectory()
